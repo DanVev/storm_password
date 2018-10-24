@@ -4,7 +4,7 @@ import colorama
 from termcolor import colored
 from time import sleep
 import json
-
+import tqdm
 
 def printf(text, color='green', sleep_time=0.04):
     for letter in text:
@@ -25,6 +25,9 @@ if __name__ == '__main__':
     cwd = osp.split(osp.realpath(__file__))[0]
 
     printf("Включение терминала\n")
+    printf('Загрузка данных с носителя...\n')
+    for i in tqdm.trange(0, 100, bar_format='{percentage:3.0f}%|{bar}| '):
+        sleep(0.06)
     printf("Запуск тестовой проверки\n")
     load_with_response('Подключение модулей питания...', 'OK\n')
     load_with_response('Проверка состояния камер видеонаблюдения...', 'OK\n')
@@ -39,6 +42,9 @@ if __name__ == '__main__':
         typed_password = input()
         if typed_password in passwords:
             printf('Пароль верный.\nИнициализирую систему видеоконтроля\n')
+            printf('Загрузка видео данных\n')
+            for i in tqdm.trange(0, 100, bar_format='{percentage:3.0f}%|{bar}| '):
+                sleep(0.1)
             if passwords[typed_password] != 'exit':
                 sleep(2)
                 os.startfile(osp.join(cwd, 'videos', str(passwords[typed_password]), 'video.mp4'))
